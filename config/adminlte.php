@@ -241,6 +241,16 @@ return [
             'url'  => 'admin/exercises',
             'icon' => 'fas fa-fw fa-dumbbell',
         ],
+        [
+            'text' => 'Rutinas',
+            'url' => 'admin/routines',
+            'icon' => 'fas fa-fw fa-running'
+        ],
+        [
+            'text' => 'Plan de Entrenamiento',
+            'url' => 'admin/workoutplans',
+            'icon' => 'fas fa-fw fa-clipboard'
+        ]
     ],
 
     /*

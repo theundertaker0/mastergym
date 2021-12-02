@@ -15,6 +15,8 @@ class MuscleController extends Controller
     public function index()
     {
         //
+        $muscles = Muscle::all();
+        return view('muscles.index', compact('muscles', $muscles));
     }
 
     /**
