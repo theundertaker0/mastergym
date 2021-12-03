@@ -8,6 +8,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    <link rel="shortcut icon" type="image/png" href="{{ asset(config('brandVars.logo')) }}">
+    <link rel="shortcut icon" sizes="192x192" href="{{ asset(config('brandVars.logo')) }}">
 
     {{-- Custom Meta Tags --}}
     @yield('meta_tags')
@@ -15,7 +17,8 @@
     {{-- Title --}}
     <title>
         @yield('title_prefix', config('adminlte.title_prefix', ''))
-        @yield('title', config('adminlte.title', 'AdminLTE 3'))
+        @yield('title', config('adminlte.title', 'brandVars.name'))
+        {{config('brandVars.name')}}
         @yield('title_postfix', config('adminlte.title_postfix', ''))
     </title>
 

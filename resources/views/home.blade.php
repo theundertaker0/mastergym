@@ -1,23 +1,30 @@
-@extends('layouts.app')
+@extends('adminlte::page')
 
-@section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">{{ __('Dashboard') }}</div>
+@section('title', 'Dashboard')
 
-                <div class="card-body">
-                    @if (session('status'))
-                        <div class="alert alert-success" role="alert">
-                            {{ session('status') }}
-                        </div>
-                    @endif
-
-                    {{ __('You are logged in!') }}
-                </div>
-            </div>
+@section('content_header')
+    <div class="row">
+        <div class="col-12 text-center">
+            <h1>{{config('brandVars.cName')}}</h1>
         </div>
     </div>
-</div>
-@endsection
+@stop
+
+@section('content')
+    <div class="row mt-4">
+        <div class="col-12 text-center">
+            <img src="{{asset(config('brandVars.bigLogo'))}}" alt="Logo" class="rounded-circle mb-2" style="max-width: 300px;">
+            <h4>Bienvenido al Sistema de Control de Gimnasios.</h4>
+            <p>Utiliza el menú lateral izquierdo para navegar por los diferentes módulos</p>
+        </div>
+    </div>
+
+@stop
+
+@section('css')
+
+@stop
+
+@section('js')
+
+@stop
