@@ -12,7 +12,7 @@
         </div>
         @if($errors->any())
             <div class="col-12 alert alert-danger text-center">
-                        <h3>Errores en el formualario</h3>
+                        <h3>Errores en el formulario</h3>
                 <ul>
                     @foreach($errors->all() as $e)
                         <li>{{$e}}</li>
@@ -23,8 +23,12 @@
     </div>
 @stop
 @section('content')
-    <form action="{{route('admin.exercises.store')}}" method="POST" enctype="multipart/form-data" id="mydropzone">
+    <form action="{{route('admin.exercises.store')}}" method="POST" enctype="multipart/form-data" class="dropzone" id="image-upload">
         @csrf
+		<div>
+                    <h3 class="text-center">Upload Multiple Image By Click On Box</h3>
+                </div>
+
         <div class="row">
             <div class="col-12 col-md-6 offset-md-3 border rounded py-3 px-2">
                 <div class="col-12">
@@ -81,33 +85,16 @@
     </form>
 @stop
 @section('js')
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.9.3/min/dropzone.min.js" integrity="sha512-oQq8uth41D+gIH/NJvSJvVB85MFk1eWpMK6glnkg6I7EdMqC1XVkW7RxLheXwmFdG03qScCM7gKS/Cx3FYt7Tg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+	
+     
+	 <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.9.3/min/dropzone.min.js" integrity="sha512-oQq8uth41D+gIH/NJvSJvVB85MFk1eWpMK6glnkg6I7EdMqC1XVkW7RxLheXwmFdG03qScCM7gKS/Cx3FYt7Tg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    
     <script>
 
-        Dropzone.options.myssdropzone  = {
-            autoProcessQueue: false,
-            init: function() {
-                var submitBtn = document.querySelector("#submit");
-                myDropzone = this;
-
-                submitBtn.addEventListener("click", function(e){
-                    e.preventDefault();
-                    e.stopPropagation();
-                    myDropzone.processQueue();
-                });
-                this.on("addedfile", function(file) {
-                    alert("file uploaded");
-                });
-
-                this.on("complete", function(file) {
-                    myDropzone.removeFile(file);
-                });
-
-                this.on("success",
-                    myDropzone.processQueue.bind(myDropzone)
-                );
-            }
-        }
+Dropzone.options.imageUpload ={
+        maxFilesize:1,
+        acceptedFiles: ".jpeg,.jpg,.png,.gif",
+    };
     </script>
 
 @Stop
