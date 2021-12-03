@@ -14,6 +14,12 @@ class Exercise extends Model
         'name',
         'img',
         'video',
-        'description'
+        'description',
+        'muscle_id'
     ];
+
+    public function muscle()
+    {
+        return $this->belongsTo(Muscle::class);
+    }
 }

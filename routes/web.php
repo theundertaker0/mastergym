@@ -17,8 +17,12 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::resource('/muscles', \App\Http\Controllers\MuscleController::class);
-
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::prefix('admin')->group(function (){
+    Route::name('admin.')->group(function (){
+        Route::resource('exercises', App\Http\Controllers\ExerciseController::class);
+    });
+});
+
