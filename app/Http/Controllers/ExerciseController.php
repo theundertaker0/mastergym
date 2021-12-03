@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Exercise;
+use App\Models\Muscle;
 use Illuminate\Http\Request;
 
 class ExerciseController extends Controller
@@ -15,8 +16,8 @@ class ExerciseController extends Controller
     public function index()
     {
         //
-        $exersices = Exercise::all();
-        return response()->json($exersices);
+        $exercises = Exercise::all();
+        return view('admin.exercises.index', compact('exercises', $exercises));
     }
 
     /**
@@ -27,6 +28,8 @@ class ExerciseController extends Controller
     public function create()
     {
         //
+        $muscles = Muscle::all();
+        return view('admin.exercises.create', compact('muscles', $muscles));
     }
 
     /**
@@ -38,10 +41,24 @@ class ExerciseController extends Controller
     public function store(Request $request)
     {
         //
-        Exercise::create($request->post());
-        return response()->json([
-            'message' => 'Guardado exitosa'
-        ]);
+        $request->validate([
+            'name'=> 'required|max:200',
+            'img'=> 'image|mimes:jpg,png,jpeg|max:2048',
+            'video' => 'max:200',
+            'muscle_id'=> 'required'
+        ], ['name.required'=> 'El nombre del ejercicio es obligatorio']);
+
+        $input = $request->all();
+        if($img = $request->file('img')){
+            $destino = 'exercises/img';
+            $nombre = date('YmdHis').".".$img->getClientOriginalExtension();
+
+            $img->move($destino, $nombre);
+            $input['img'] = $nombre;
+        }
+
+        Exercise::create($input);
+        return redirect()->route('admin.exercises.index')->with('message', 'Ejercicio guardado con éxito');
     }
 
     /**
@@ -53,9 +70,9 @@ class ExerciseController extends Controller
     public function show(Exercise $exercise)
     {
         //
-        return response()->json([
-            'exercise' => $exercise
-        ]);
+        $muscle = $exercise->muscle;
+        return view('admin.exercises.show', with(['exercise' => $exercise, 'muscle' => $muscle]));
+        //
     }
 
     /**
@@ -67,6 +84,9 @@ class ExerciseController extends Controller
     public function edit(Exercise $exercise)
     {
         //
+        $muscles = Muscle::all();
+        return view('admin.exercises.edit', with(['exercise' => $exercise, 'muscles' => $muscles]));
+        //return view('admin.exercises.edit', compact(['exercise' => $exercise, 'muscles' => $muscles]));
     }
 
     /**
@@ -79,10 +99,26 @@ class ExerciseController extends Controller
     public function update(Request $request, Exercise $exercise)
     {
         //
-        $exercise->fill($request->post())->save();
-        return response()->json([
-            'exercise' => $exercise
+        //
+        $request->validate([
+            'name'=> 'required|max:200',
+            'img'=> 'image|mimes:jpg,png,jpeg|max:2048',
+            'video' => 'max:200',
+            'muscle_id'=> 'required'
         ]);
+
+        $input = $request->all();
+        if($img = $request->file('img')){
+            $destino = 'exercises/img';
+            $nombre = date('YmdHis').".".$img->getClientOriginalExtension();
+
+            $img->move($destino, $nombre);
+            $input['img'] = $nombre;
+        } else {
+            unset($input['img']);
+        }
+        $exercise->update($input);
+        return redirect()->route('admin.exercises.index')->with('message', 'Ejercicio modificado con éxito');
     }
 
     /**
@@ -95,8 +131,6 @@ class ExerciseController extends Controller
     {
         //
         $exercise->delete();
-        return response()->json([
-            'message' => 'Eliminación exitosa'
-        ]);
+        return redirect()->route('admin.exercises.index')->with('message', 'Ejercicio Eliminado con éxito');
     }
 }
