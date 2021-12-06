@@ -1,12 +1,12 @@
 @extends('adminlte::page')
 @section('title', 'Nuevo Ejercicio')
 @section('css')
-    <link rel="stylesheet" href="{{asset('css/custominputfile.min.css')}}" type="text/css" />
+    <link rel="stylesheet" href="{{asset('/custominputfile/css/custominputfile.min.css')}}" type="text/css" />
 @stop
 @section('content_header')
     <div class="row">
         <div class="col-12 col-md-6 offset-md-3 text-center">
-            <h1>Agregar Ejercicios</h1>
+            <h1>Agregar Ejercicio</h1>
         </div>
         @if($errors->any())
             <div class="col-12 alert alert-danger text-center">
@@ -37,9 +37,12 @@
                         <input id="name" type="text" name="name" class="form-control" placeholder="Nombre del ejercicio">
                     </div>
                 </div>
-                <div class="col-12">
+                <div class="col-12 text-center">
                     <div class="form-group">
-                        <input name="img" id="img" class="form-control">
+                        <strong>
+                            Imagen:
+                        </strong>
+                        <input name="img" id="img" class="" style="width: 100%">
                     </div>
                 </div>
                 <div class="col-12">
@@ -62,7 +65,7 @@
                         </select>
                     </div>
                 </div>
-                <div class="col-12">
+                <div class="col-12 text-center">
                     <div class="form-group">
                         <strong>
                             Descripción:
@@ -82,22 +85,34 @@
     </form>
 @stop
 @section('js')
-    <script src="{{asset('js/custominputfile.min-es.js')}}"></script>
+    <script src="{{asset('custominputfile/js/custominputfile.min.js')}}"></script>
+    <script src="{{asset('ckeditor/ckeditor.js')}}"></script>
     <script>
         $('#img').customFile({
             type : 'image',
+            allowed: ["jpg", "png", "bmp", "jpeg", "webp"],
             preview : {
                 display: true, // Default: true
                 maxWidth: 100  // if cropSize were wider than maxWidth, only preview would be redimensioned (real crop area would not)
             },
             multiple: false,
             maxFiles: 1,
+            maxMB: 2,
+            messages: {
+              errorType : 'Tipo de archivo no admitido',
+              errorMaxMB : 'Imagen demasiado grande el máximo permitido es de 2MB',
+              errorMaxFiles : 'Solo puede cargar una imagen'
+            },
             progressBar : {
                 active : true, // Set false if you do not want a progress bar at all
                 appendTo : $('body'),  // which node you want to append current progressBar to
                 removeAfterComplete : true,
             },
+            filePicker : "<h3>Arrastra tu imagen aquí</h3><p>o puedes dar clic para seleccionarla</p><div class = 'cif-icon-picker'></div>",
+            width : '100%'
         });
+
+        CKEDITOR.replace( 'description' );
     </script>
 
 @Stop
