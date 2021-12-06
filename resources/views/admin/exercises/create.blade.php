@@ -1,9 +1,7 @@
 @extends('adminlte::page')
 @section('title', 'Nuevo Ejercicio')
 @section('css')
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.9.3/basic.css"
-          integrity="sha512-+Vla3mZvC+lQdBu1SKhXLCbzoNCl0hQ8GtCK8+4gOJS/PN9TTn0AO6SxlpX8p+5Zoumf1vXFyMlhpQtVD5+eSw=="
-          crossorigin="anonymous" referrerpolicy="no-referrer"/>
+    <link rel="stylesheet" href="{{asset('css/custominputfile.min.css')}}" type="text/css" />
 @stop
 @section('content_header')
     <div class="row">
@@ -23,7 +21,7 @@
     </div>
 @stop
 @section('content')
-    <form action="{{route('admin.exercises.store')}}" method="POST" enctype="multipart/form-data" class="dropzone" id="image-upload">
+    <form action="{{route('admin.exercises.store')}}" method="POST" enctype="multipart/form-data"  class="dropzone" id="image-upload">
         @csrf
 		<div>
                     <h3 class="text-center">Upload Multiple Image By Click On Box</h3>
@@ -40,10 +38,9 @@
                     </div>
                 </div>
                 <div class="col-12">
-                    <div class="dz-message" style="height:200px;">
-                        Drop your files here
+                    <div class="form-group">
+                        <input name="img" id="img" class="form-control">
                     </div>
-                    <div class="dropzone-previews"></div>
                 </div>
                 <div class="col-12">
                     <div class="form-group">
@@ -85,16 +82,22 @@
     </form>
 @stop
 @section('js')
-	
-     
-	 <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.9.3/min/dropzone.min.js" integrity="sha512-oQq8uth41D+gIH/NJvSJvVB85MFk1eWpMK6glnkg6I7EdMqC1XVkW7RxLheXwmFdG03qScCM7gKS/Cx3FYt7Tg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    
+    <script src="{{asset('js/custominputfile.min-es.js')}}"></script>
     <script>
-
-Dropzone.options.imageUpload ={
-        maxFilesize:1,
-        acceptedFiles: ".jpeg,.jpg,.png,.gif",
-    };
+        $('#img').customFile({
+            type : 'image',
+            preview : {
+                display: true, // Default: true
+                maxWidth: 100  // if cropSize were wider than maxWidth, only preview would be redimensioned (real crop area would not)
+            },
+            multiple: false,
+            maxFiles: 1,
+            progressBar : {
+                active : true, // Set false if you do not want a progress bar at all
+                appendTo : $('body'),  // which node you want to append current progressBar to
+                removeAfterComplete : true,
+            },
+        });
     </script>
 
 @Stop
