@@ -74,9 +74,6 @@
                         <textarea id="description" name="description" class="form-control"></textarea>
                     </div>
                 </div>
-                <div id="imgData">
-                    <input name="img" id="img" type="file" style="width: 100%">
-                </div>
                 <div class="col-12">
                     <div class="form-group text-center">
                         <a class="btn btn-danger" href="{{ route('admin.exercises.index') }}">Cancelar</a>
