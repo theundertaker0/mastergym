@@ -1,7 +1,8 @@
 @extends('adminlte::page')
 @section('title', 'Nuevo Ejercicio')
 @section('css')
-    <link rel="stylesheet" href="{{ asset('/custominputfile/css/custominputfile.min.css') }}" type="text/css" />
+    <link href="https://cdn.jsdelivr.net/gh/kartik-v/bootstrap-fileinput@5.2.5/css/fileinput.min.css" media="all" rel="stylesheet" type="text/css" />
+
 @stop
 @section('content_header')
     <div class="row">
@@ -10,7 +11,7 @@
         </div>
         @if ($errors->any())
             <div class="col-12 alert alert-danger text-center">
-                <h3>Errores en el formulario</h3>
+                        <h3>Errores en el formulario</h3>
                 <ul>
                     @foreach ($errors->all() as $e)
                         <li>{{ $e }}</li>
@@ -21,8 +22,7 @@
     </div>
 @stop
 @section('content')
-    <form action="{{ route('admin.exercises.store') }}" method="POST" enctype="multipart/form-data" class="dropzone"
-        id="image-upload">
+    <form action="{{route('admin.exercises.store')}}" method="POST" enctype="multipart/form-data"  class="dropzone" id="image-upload">
         @csrf
         <div>
             <h3 class="text-center">Upload Multiple Image By Click On Box</h3>
@@ -43,7 +43,7 @@
                         <strong>
                             Imagen:
                         </strong>
-                        <input name="imgPreview" id="imgPreview" class="" style="width: 100%">
+                        <input type="file" name = "img" id = "img">
                     </div>
                 </div>
                 <div class="col-12">
@@ -89,62 +89,25 @@
     </form>
 @stop
 @section('js')
-    <script src="{{ asset('custominputfile/js/custominputfile.min.js') }}"></script>
-    <script src="{{ asset('ckeditor/ckeditor.js') }}"></script>
-    <script>
-        $('#imgPreview').customFile({
-            type: 'image',
-            allowed: ["jpg", "png", "bmp", "jpeg", "webp"],
-            preview: {
-                display: true, // Default: true
-                maxWidth: 100 // if cropSize were wider than maxWidth, only preview would be redimensioned (real crop area would not)
-            },
-            multiple: false,
-            maxFiles: 1,
-            maxMB: 2,
-            messages: {
-                errorType: 'Tipo de archivo no admitido',
-                errorMaxMB: 'Imagen demasiado grande el máximo permitido es de 2MB',
-                errorMaxFiles: 'Solo puede cargar una imagen'
-            },
-            progressBar: {
-                active: true, // Set false if you do not want a progress bar at all
-                appendTo: $('body'), // which node you want to append current progressBar to
-                removeAfterComplete: true,
-            },
-            filePicker: "<h3>Arrastra tu imagen aquí</h3><p>o puedes dar clic para seleccionarla</p><div class = 'cif-icon-picker'></div>",
-            width: '100%',
-            callbacks: {
-                onComplete: function(app) {
-                    // Function fires when all files have already read;
-                    // You can access to app public properties like app.itemFileList or app.name
-                    console.log('process completed. You have selected  ' + app.itemFileList.length + ' files')
-                    // console.log($.customFile.serialize('img'));
-                    // console.log(app);
-                    // console.log(app.itemFileList[0].file);
-                    // console.log(app.itemFileList[0].img.src);
-                    // $('#img').attr('src', app.itemFileList[0].img.src);
-                    // console.log(app.itemFileList[0].node);
-                    // $('#img').val(app.itemFileList[0].img);
-                    // $('#img').val(app.itemFileList[0].img.src);
-                    // $('#imgData').append(app.itemFileList[0].img);
-                    // $('#imgData img').attr('id', 'img');
-                    // $('#imgData img').attr('name', 'img');
-                    // $('#imgData').append($.customFile.serialize('img'));
-                },
-                onSuccess: function(item, callback) {
-                    console.log(item);
-                    // Function fires every time a file has been successfuly read;
-                    // Return false if you want app to stop reading next file.
-                    // Reading next file is callback. So, you can handle callback and fire it whenever you like (e.g., when file is already uploaded)
-                    // item is the current ItemFile instance. You can access to its public methods and public properties.
-                    // setTimeout(callback, 2000);
-                    return false;
-                },
-            }
-        });
+    <!-- the main fileinput plugin script JS file -->
+    <script src="https://cdn.jsdelivr.net/gh/kartik-v/bootstrap-fileinput@5.2.5/js/fileinput.min.js"></script>
 
-        CKEDITOR.replace('description');
+    <!-- following theme script is needed to use the Font Awesome 5.x theme (`fas`). Uncomment if needed. -->
+    <script src="https://cdn.jsdelivr.net/gh/kartik-v/bootstrap-fileinput@5.2.5/themes/fas/theme.min.js"></script>
+
+    <!-- optionally if you need translation for your language then include the locale file as mentioned below (replace LANG.js with your language locale) -->
+    <script src="https://cdn.jsdelivr.net/gh/kartik-v/bootstrap-fileinput@5.2.5/js/locales/es.js"></script>
+    <script src="{{asset('ckeditor/ckeditor.js')}}"></script>
+    <script>
+       $('#img').fileinput({
+          language : 'es',
+           showUpload : false,
+           browseOnZoneClick : true,
+           allowedFileExtensions: ["jpg", "jpeg", "bmp", "png"],
+           maxFileSize: 2048,
+       });
+
+        CKEDITOR.replace( 'description' );
     </script>
 
 @Stop

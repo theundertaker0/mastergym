@@ -1,7 +1,7 @@
 @extends('adminlte::page')
 @section('title', 'Nuevo Ejercicio')
 @section('css')
-    <link rel="stylesheet" href="{{asset('/custominputfile/css/custominputfile.min.css')}}" type="text/css" />
+    <link href="https://cdn.jsdelivr.net/gh/kartik-v/bootstrap-fileinput@5.2.5/css/fileinput.min.css" media="all" rel="stylesheet" type="text/css" />
 @stop
 @section('content_header')
     <div class="row">
@@ -77,31 +77,23 @@
     </form>
 @stop
 @section('js')
-    <script src="{{asset('custominputfile/js/custominputfile.min.js')}}"></script>
+    <!-- the main fileinput plugin script JS file -->
+    <script src="https://cdn.jsdelivr.net/gh/kartik-v/bootstrap-fileinput@5.2.5/js/fileinput.min.js"></script>
+
+    <!-- following theme script is needed to use the Font Awesome 5.x theme (`fas`). Uncomment if needed. -->
+    <script src="https://cdn.jsdelivr.net/gh/kartik-v/bootstrap-fileinput@5.2.5/themes/fas/theme.min.js"></script>
+
+    <!-- optionally if you need translation for your language then include the locale file as mentioned below (replace LANG.js with your language locale) -->
+    <script src="https://cdn.jsdelivr.net/gh/kartik-v/bootstrap-fileinput@5.2.5/js/locales/es.js"></script>
     <script src="{{asset('ckeditor/ckeditor.js')}}"></script>
     <script>
-        $('#img').customFile({
-            type : 'image',
-            allowed: ["jpg", "png", "bmp", "jpeg", "webp"],
-            preview : {
-                display: true, // Default: true
-                maxWidth: 100  // if cropSize were wider than maxWidth, only preview would be redimensioned (real crop area would not)
-            },
-            multiple: false,
-            maxFiles: 1,
-            maxMB: 2,
-            messages: {
-                errorType : 'Tipo de archivo no admitido',
-                errorMaxMB : 'Imagen demasiado grande el máximo permitido es de 2MB',
-                errorMaxFiles : 'Solo puede cargar una imagen'
-            },
-            progressBar : {
-                active : true, // Set false if you do not want a progress bar at all
-                appendTo : $('body'),  // which node you want to append current progressBar to
-                removeAfterComplete : true,
-            },
-            filePicker : "<h3>Arrastra tu imagen aquí</h3><p>o puedes dar clic para seleccionarla</p><div class = 'cif-icon-picker'></div>",
-            width : '100%'
+
+        $('#img').fileinput({
+            language : 'es',
+            showUpload : false,
+            browseOnZoneClick : true,
+            allowedFileExtensions: ["jpg", "jpeg", "bmp", "png"],
+            maxFileSize: 2048,
         });
 
         CKEDITOR.replace( 'description' );

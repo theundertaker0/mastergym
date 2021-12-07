@@ -43,8 +43,7 @@ class ExerciseController extends Controller
     public function store(Request $request)
     {
         //
-        $img = $request->file('img');
-        dd($img);
+dd($request);
         $request->validate([
             'name'=> 'required|max:200',
             'img'=> 'image|mimes:jpg,png,jpeg|max:2048',
