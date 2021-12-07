@@ -75,7 +75,7 @@
                     </div>
                 </div>
                 <div id="imgData">
-
+                    <input name="img" id="img" type="file" style="width: 100%">
                 </div>
                 <div class="col-12">
                     <div class="form-group text-center">
@@ -119,6 +119,7 @@
                     // Function fires when all files have already read;
                     // You can access to app public properties like app.itemFileList or app.name
                     console.log('process completed. You have selected  ' + app.itemFileList.length + ' files')
+                    // console.log($.customFile.serialize('img'));
                     // console.log(app);
                     // console.log(app.itemFileList[0].file);
                     // console.log(app.itemFileList[0].img.src);
@@ -126,11 +127,20 @@
                     // console.log(app.itemFileList[0].node);
                     // $('#img').val(app.itemFileList[0].img);
                     // $('#img').val(app.itemFileList[0].img.src);
-                    $('#imgData').append(app.itemFileList[0].img);
-                    $('#imgData img').attr('id', 'img');
-                    $('#imgData img').attr('name', 'img');
+                    // $('#imgData').append(app.itemFileList[0].img);
+                    // $('#imgData img').attr('id', 'img');
+                    // $('#imgData img').attr('name', 'img');
                     // $('#imgData').append($.customFile.serialize('img'));
-                }
+                },
+                onSuccess: function(item, callback) {
+                    console.log(item);
+                    // Function fires every time a file has been successfuly read;
+                    // Return false if you want app to stop reading next file.
+                    // Reading next file is callback. So, you can handle callback and fire it whenever you like (e.g., when file is already uploaded)
+                    // item is the current ItemFile instance. You can access to its public methods and public properties.
+                    // setTimeout(callback, 2000);
+                    return false;
+                },
             }
         });
 
