@@ -74,6 +74,11 @@ class ExerciseController extends Controller
     {
         //
         $muscle = $exercise->muscle;
+        $attributes = [
+
+            'class' => 'iframe-class',
+            'data-html5-parameter' => true
+        ];
         $video = LaravelVideoEmbed::parse($exercise->video);
         return view('admin.exercises.show', with(['exercise' => $exercise, 'muscle' => $muscle, 'video' => $video]));
         //
