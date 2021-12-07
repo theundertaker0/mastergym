@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Exercise;
 use App\Models\Muscle;
+use Cohensive\Embed\Embed;
 use Illuminate\Http\Request;
+use Merujan99\LaravelVideoEmbed\Facades\LaravelVideoEmbed;
 
 class ExerciseController extends Controller
 {
@@ -41,7 +43,7 @@ class ExerciseController extends Controller
     public function store(Request $request)
     {
         //
-        dd($request);
+
         $request->validate([
             'name'=> 'required|max:200',
             'img'=> 'image|mimes:jpg,png,jpeg|max:2048',
@@ -72,7 +74,8 @@ class ExerciseController extends Controller
     {
         //
         $muscle = $exercise->muscle;
-        return view('admin.exercises.show', with(['exercise' => $exercise, 'muscle' => $muscle]));
+        $video = LaravelVideoEmbed::parse($exercise->video);
+        return view('admin.exercises.show', with(['exercise' => $exercise, 'muscle' => $muscle, 'video' => $video]));
         //
     }
 

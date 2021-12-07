@@ -1,5 +1,5 @@
 @extends('adminlte::page')
-@section('title', 'Nuevo Ejercicio')
+@section('title', 'ver ejercicio ')
 @section('content_header')
     <div class="row">
         <div class="col-12 col-md-6 offset-md-3 text-center">
@@ -9,25 +9,36 @@
 @stop
 @section('content')
     <div class="row">
-        <div class="col-12 col-md-6 offset-md-3 border rounded py-3 px-2">
-        <div class="col-12">
-            <img src="{{asset('exercises/img/'.$exercise->img)}}" alt="" class="img-fluid">
+        <div class="col-12 col-md-6 offset-md-3">
+            <div class="card">
+                @if($exercise->img && $exercise->img != "")
+                    <img src="{{asset('exercises/img/'.$exercise->img)}}" alt="" class="card-img-top">
+                @else
+                    <img src="{{asset('img/dummyexercise.jpg')}}" alt="" class="card-img-top">
+                @endif
 
-        </div>
-            <div class="col-12">
-                <iframe width="560" height="315" src="{{$exercise->video}}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                <ul class="list-group list-group-flush"></ul>
+                <li class="list-group-item">
+                    <h5 card="card-title">Video</h5>
+                    @if($video)
+                        {!! $video !!}
+                    @else
+                        <p>El ejercicio no cuenta con enlace de video válido</p>
+                    @endif
+                </li>
+                <li class="list-group-item">
+                    <h5 card="card-title">Grupo Muscular</h5>
+                    <p>{{$muscle->name}}</p>
+                </li>
+                <li class="list-group-item">
+                    <h5 card="card-title">Descripción</h5>
+                    {!! $exercise->description !!}
+                </li>
             </div>
 
-        <div class="col-12">
-            <strong>
-                Grupo muscular:
-            </strong>
-            {{$muscle->name}}
-        </div>
-        <div class="col-12">
-            {{$exercise->description}}
-        </div>
-        <div class="col-12">
+
+
+        <div class="col-12 mt-2">
             <div class="form-group text-center">
                 <a class="btn btn-danger" href="{{route('admin.exercises.index')}}">Regresar</a>
             </div>
