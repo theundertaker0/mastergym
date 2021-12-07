@@ -43,7 +43,8 @@ class ExerciseController extends Controller
     public function store(Request $request)
     {
         //
-
+        $img = $request->file('img');
+        dd($img);
         $request->validate([
             'name'=> 'required|max:200',
             'img'=> 'image|mimes:jpg,png,jpeg|max:2048',
@@ -52,7 +53,8 @@ class ExerciseController extends Controller
         ], ['name.required'=> 'El nombre del ejercicio es obligatorio']);
 
         $input = $request->all();
-        if($img = $request->file('img')){
+        if($img = $request->img){
+        // if($img = $request->file('img')){
             $destino = 'exercises/img';
             $nombre = date('YmdHis').".".$img->getClientOriginalExtension();
 
