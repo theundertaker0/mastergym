@@ -20,11 +20,13 @@
                 <ul class="list-group list-group-flush"></ul>
                 <li class="list-group-item">
                     <h5 card="card-title">Video</h5>
-                    @if($video)
-                        {!! $video !!}
-                    @else
-                        <p>El ejercicio no cuenta con enlace de video válido</p>
-                    @endif
+                    <div class="embed-responsive embed-responsive-16by9">
+                        @if($video)
+                            {!! $video !!}
+                        @else
+                            <p>El ejercicio no cuenta con enlace de video válido</p>
+                        @endif
+                    </div>
                 </li>
                 <li class="list-group-item">
                     <h5 card="card-title">Grupo Muscular</h5>
