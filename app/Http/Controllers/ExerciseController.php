@@ -30,7 +30,7 @@ class ExerciseController extends Controller
     public function create()
     {
         //
-        $muscles = Muscle::all();
+        $muscles = Muscle::all()->sortBy("name");
         return view('admin.exercises.create', compact('muscles', $muscles));
     }
 
@@ -88,7 +88,7 @@ class ExerciseController extends Controller
     public function edit(Exercise $exercise)
     {
         //
-        $muscles = Muscle::all();
+        $muscles = Muscle::all()->sortBy("name");
         return view('admin.exercises.edit', with(['exercise' => $exercise, 'muscles' => $muscles]));
         //return view('admin.exercises.edit', compact(['exercise' => $exercise, 'muscles' => $muscles]));
     }
