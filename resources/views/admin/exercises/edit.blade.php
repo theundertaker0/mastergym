@@ -94,6 +94,10 @@
             browseOnZoneClick : true,
             allowedFileExtensions: ["jpg", "jpeg", "bmp", "png"],
             maxFileSize: 2048,
+            @if($exercise->img && $exercise->img != "")
+                initialPreview : ['{{asset('exercises/img/'.$exercise->img)}}'],
+            initialPreviewAsData : true,
+            @endif
         });
 
         CKEDITOR.replace( 'description' );

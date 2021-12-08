@@ -117,11 +117,12 @@ class ExerciseController extends Controller
 
         $input = $request->all();
         if($img = $request->file('img')){
-            $destino = 'exercises/img';
-            $nombre = date('YmdHis').".".$img->getClientOriginalExtension();
-
-            $img->move($destino, $nombre);
-            $input['img'] = $nombre;
+            if($img->getClientOriginalName() !=  $exercise->img){
+                $destino = 'exercises/img';
+                $nombre = date('YmdHis').".".$img->getClientOriginalExtension();
+                $img->move($destino, $nombre);
+                $input['img'] = $nombre;
+            }
         } else {
             unset($input['img']);
         }
