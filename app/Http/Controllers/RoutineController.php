@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Muscle;
 use App\Models\Routine;
 use Illuminate\Http\Request;
 
@@ -28,6 +29,8 @@ class RoutineController extends Controller
     public function create()
     {
         //
+        $muscles = Muscle::with('exercises')->get();
+        return view('admin.routines.create', compact('muscles', $muscles));
     }
 
     /**
