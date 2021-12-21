@@ -18,8 +18,8 @@ class CreateRoutineTrainingTable extends Migration
             $table->unsignedBigInteger('training_id');
             $table->unsignedBigInteger('routine_id');
 
-            $table->foreign('training_id')->references('id')->on('trainings');
-            $table->foreign('routine_id')->references('id')->on('routines');
+            $table->foreign('training_id')->references('id')->on('trainings')->onDelete('cascade');
+            $table->foreign('routine_id')->references('id')->on('routines')->onDelete('cascade');
 
             $table->timestamps();
         });
