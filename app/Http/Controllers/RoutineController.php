@@ -57,7 +57,7 @@ class RoutineController extends Controller
                 $routine->save();
                 foreach($request->routineExercises as $e)
                 {
-                    $routine->exercises()->sync([$e=>['series' => $request->{'series-'.$e}?$request->{'series-'.$e}:null, 'repetitions' => $request->{'reps-'.$e}?$request->{'reps-'.$e}:null]]);
+                    $routine->exercises()->attach([$e=>['series' => $request->{'series-'.$e}?$request->{'series-'.$e}:null, 'repetitions' => $request->{'reps-'.$e}?$request->{'reps-'.$e}:null]]);
                 }
             });
         }catch (\Exception $err) {
