@@ -26,7 +26,7 @@ class Exercise extends Model
 
     public function routines()
     {
-        return $this->belongsToMany(Routine::class);
+        return $this->belongsToMany(Routine::class)->withPivot('series','repetitions');
     }
 
 

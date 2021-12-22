@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Muscle;
 use App\Models\Routine;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class RoutineController extends Controller
 {
@@ -46,6 +47,26 @@ class RoutineController extends Controller
             ['name'=> 'required|max:200'],
             ['name.required'=> 'El nombre de la rutina es obligatorio']
         );
+
+        //Guardamos
+        try{
+            DB::transaction(function() use ($request){
+                $routine = new Routine();
+                $routine->name = $request->name;
+                $routine->description = $request->description;
+                $routine->save();
+                foreach($request->routineExercises as $e)
+                {
+                    $routine->exercises()->sync([$e=>['series' => $request->{'series-'.$e}?$request->{'series-'.$e}:null, 'repetitions' => $request->{'reps-'.$e}?$request->{'reps-'.$e}:null]]);
+                }
+            });
+        }catch (\Exception $err) {
+            dd($err,$request);
+            return redirect()->route('admin.routines.index')->with('message', 'Problemas al guardar en base de datos');
+        }
+        return redirect()->route('admin.routines.index')->with('message', 'Rutina guardada con éxito');
+
+
     }
 
     /**
