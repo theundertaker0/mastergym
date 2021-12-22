@@ -61,7 +61,6 @@ class RoutineController extends Controller
                 }
             });
         }catch (\Exception $err) {
-            dd($err,$request);
             return redirect()->route('admin.routines.index')->with('message', 'Problemas al guardar en base de datos');
         }
         return redirect()->route('admin.routines.index')->with('message', 'Rutina guardada con éxito');
@@ -78,6 +77,9 @@ class RoutineController extends Controller
     public function show(Routine $routine)
     {
         //
+        $exercises = $routine->exercises()->get();
+        //dd($exercises);
+        return view('admin.routines.show', with(['routine' => $routine, 'exercises' => $exercises]));
     }
 
     /**
