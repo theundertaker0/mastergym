@@ -56,9 +56,10 @@ class RoutineController extends Controller
                 $routine->name = $request->name;
                 $routine->description = $request->description;
                 $routine->save();
-                foreach($request->routineExercises as $e)
-                {
-                    $routine->exercises()->attach([$e=>['series' => $request->{'series-'.$e}?$request->{'series-'.$e}:null, 'repetitions' => $request->{'reps-'.$e}?$request->{'reps-'.$e}:null]]);
+                if($request->routineExercises) {
+                    foreach ($request->routineExercises as $e) {
+                        $routine->exercises()->attach([$e => ['series' => $request->{'series-' . $e} ? $request->{'series-' . $e} : null, 'repetitions' => $request->{'reps-' . $e} ? $request->{'reps-' . $e} : null]]);
+                    }
                 }
             });
         }catch (\Exception $err) {
@@ -126,16 +127,17 @@ class RoutineController extends Controller
                 $routine->description = $request->description;
                 $routine->update();
                 $sync = array();
-                foreach($request->routineExercises as $e)
-                {
-                    $sync[$e] = ['series' => $request->{'series-'.$e}?$request->{'series-'.$e}:null, 'repetitions' => $request->{'reps-'.$e}?$request->{'reps-'.$e}:null];
+                if($request->routineExercises) {
+                    foreach ($request->routineExercises as $e) {
+                        $sync[$e] = ['series' => $request->{'series-' . $e} ? $request->{'series-' . $e} : null, 'repetitions' => $request->{'reps-' . $e} ? $request->{'reps-' . $e} : null];
 
+                    }
+                    //dd($sync);
+                    $routine->exercises()->sync($sync);
                 }
-                //dd($sync);
-                $routine->exercises()->sync($sync);
             });
         }catch (\Exception $err) {
-            dd($err);
+            //dd($err);
             return redirect()->route('admin.routines.index')->with('message', 'Problemas al guardar en base de datos');
         }
         return redirect()->route('admin.routines.index')->with('message', 'Rutina guardada con éxito');
@@ -152,5 +154,8 @@ class RoutineController extends Controller
     public function destroy(Routine $routine)
     {
         //
+        $routine->exercises()->detach();
+        $routine->delete();
+        return redirect()->route('admin.routines.index')->with('message', 'Rutina Eliminada con éxito');
     }
 }

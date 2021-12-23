@@ -35,6 +35,8 @@
                             <div class="card-body">
                                 <h5 class="card-title text-center" style="width: 100%;">{{$e->name}}</h5>
                                 <p class="card-text">{!! $e->description !!}</p>
+                            </div>
+                            <div class="card-footer">
                                 <p class="card-text text-center"><small class="text-muted">Series:{{$e->pivot->series?$e->pivot->series:"NA"}} - Repeticiones:{{$e->pivot->repetitions?$e->pivot->repetitions:"NA"}}</small></p>
                             </div>
                         </div>
