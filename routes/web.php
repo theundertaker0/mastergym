@@ -24,6 +24,7 @@ Route::prefix('admin')->group(function (){
     Route::name('admin.')->group(function (){
         Route::resource('exercises', App\Http\Controllers\ExerciseController::class);
         Route::resource('routines', App\Http\Controllers\RoutineController::class);
+        Route::resource('trainings',\App\Http\Controllers\TrainingController::class);
     });
 });
 

@@ -13,10 +13,15 @@ class Routine extends Model
     protected $fillable = [
         'name',
         'description',
-        'day1',
-        'day2',
-        'day3',
-        'dat4',
-        'day5'
     ];
+
+    public function exercises()
+    {
+        return $this->belongsToMany(Exercise::class)->withPivot('series','repetitions');
+    }
+
+    public function trainings()
+    {
+        return $this->belongsToMany(Training::class);
+    }
 }

@@ -24,5 +24,10 @@ class Exercise extends Model
         return $this->belongsTo(Muscle::class);
     }
 
+    public function routines()
+    {
+        return $this->belongsToMany(Routine::class)->withPivot('series','repetitions');
+    }
+
 
 }

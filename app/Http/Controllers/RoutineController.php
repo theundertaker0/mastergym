@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Muscle;
 use App\Models\Routine;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use phpDocumentor\Reflection\Types\Array_;
 
 class RoutineController extends Controller
 {
@@ -42,6 +44,30 @@ class RoutineController extends Controller
     public function store(Request $request)
     {
         //
+        $request->validate(
+            ['name'=> 'required|max:200'],
+            ['name.required'=> 'El nombre de la rutina es obligatorio']
+        );
+
+        //Guardamos
+        try{
+            DB::transaction(function() use ($request){
+                $routine = new Routine();
+                $routine->name = $request->name;
+                $routine->description = $request->description;
+                $routine->save();
+                if($request->routineExercises) {
+                    foreach ($request->routineExercises as $e) {
+                        $routine->exercises()->attach([$e => ['series' => $request->{'series-' . $e} ? $request->{'series-' . $e} : null, 'repetitions' => $request->{'reps-' . $e} ? $request->{'reps-' . $e} : null]]);
+                    }
+                }
+            });
+        }catch (\Exception $err) {
+            return redirect()->route('admin.routines.index')->with('message', 'Problemas al guardar en base de datos');
+        }
+        return redirect()->route('admin.routines.index')->with('message', 'Rutina guardada con éxito');
+
+
     }
 
     /**
@@ -53,6 +79,9 @@ class RoutineController extends Controller
     public function show(Routine $routine)
     {
         //
+        $exercises = $routine->exercises()->get();
+        //dd($exercises);
+        return view('admin.routines.show', with(['routine' => $routine, 'exercises' => $exercises]));
     }
 
     /**
@@ -64,6 +93,16 @@ class RoutineController extends Controller
     public function edit(Routine $routine)
     {
         //
+        $muscles = Muscle::with('exercises')->get();
+        $exercises = $routine->exercises()->get();
+        //$h = $exercises->collect()->where('id', 3)->toArray();
+        //dd($h);
+        $e = array();
+        foreach ($exercises as $ex) {
+            array_push($e, $ex->id);
+        }
+        return view('admin.routines.edit', with(['routine' => $routine, 'muscles' => $muscles, 'exercises' => $exercises, 'er' => $e]));
+
     }
 
     /**
@@ -76,6 +115,34 @@ class RoutineController extends Controller
     public function update(Request $request, Routine $routine)
     {
         //
+        $request->validate(
+            ['name'=> 'required|max:200'],
+            ['name.required'=> 'El nombre de la rutina es obligatorio']
+        );
+
+        //Guardamos
+        try{
+            DB::transaction(function() use ($request, $routine){
+                $routine->name = $request->name;
+                $routine->description = $request->description;
+                $routine->update();
+                $sync = array();
+                if($request->routineExercises) {
+                    foreach ($request->routineExercises as $e) {
+                        $sync[$e] = ['series' => $request->{'series-' . $e} ? $request->{'series-' . $e} : null, 'repetitions' => $request->{'reps-' . $e} ? $request->{'reps-' . $e} : null];
+
+                    }
+                    //dd($sync);
+                    $routine->exercises()->sync($sync);
+                }
+            });
+        }catch (\Exception $err) {
+            //dd($err);
+            return redirect()->route('admin.routines.index')->with('message', 'Problemas al guardar en base de datos');
+        }
+        return redirect()->route('admin.routines.index')->with('message', 'Rutina guardada con éxito');
+
+
     }
 
     /**
@@ -87,5 +154,8 @@ class RoutineController extends Controller
     public function destroy(Routine $routine)
     {
         //
+        $routine->exercises()->detach();
+        $routine->delete();
+        return redirect()->route('admin.routines.index')->with('message', 'Rutina Eliminada con éxito');
     }
 }

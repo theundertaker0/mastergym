@@ -248,7 +248,7 @@ return [
         ],
         [
             'text' => 'Plan de Entrenamiento',
-            'url' => 'admin/workoutplans',
+            'url' => 'admin/trainings',
             'icon' => 'fas fa-fw fa-clipboard'
         ]
     ],

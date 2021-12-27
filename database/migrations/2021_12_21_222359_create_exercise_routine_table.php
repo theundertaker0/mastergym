@@ -18,10 +18,10 @@ class CreateExerciseRoutineTable extends Migration
             $table->unsignedBigInteger('exercise_id');
             $table->unsignedBigInteger('routine_id');
             $table->string('series',100)->nullable();
-            $table->string('repetitions');
+            $table->string('repetitions',100)->nullable();
 
-            $table->foreign('exercise_id')->references('id')->on('exercises');
-            $table->foreign('routine_id')->references('id')->on('routines');
+            $table->foreign('exercise_id')->references('id')->on('exercises')->onDelete('cascade');
+            $table->foreign('routine_id')->references('id')->on('routines')->onDelete('cascade');
 
             $table->timestamps();
         });
