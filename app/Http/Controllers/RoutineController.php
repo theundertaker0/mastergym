@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Muscle;
 use App\Models\Routine;
+use Barryvdh\DomPDF\Facade as PDF;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use phpDocumentor\Reflection\Types\Array_;
@@ -45,7 +46,7 @@ class RoutineController extends Controller
     {
         //
         $request->validate(
-            ['name'=> 'required|max:200'],
+            ['name'=> 'required|max:400'],
             ['name.required'=> 'El nombre de la rutina es obligatorio']
         );
 
@@ -116,7 +117,7 @@ class RoutineController extends Controller
     {
         //
         $request->validate(
-            ['name'=> 'required|max:200'],
+            ['name'=> 'required|max:400'],
             ['name.required'=> 'El nombre de la rutina es obligatorio']
         );
 
@@ -157,5 +158,16 @@ class RoutineController extends Controller
         $routine->exercises()->detach();
         $routine->delete();
         return redirect()->route('admin.routines.index')->with('message', 'Rutina Eliminada con éxito');
+    }
+
+    public function download($id)
+    {
+        $input = array();
+        $routine = Routine::find($id);
+        $exercises = $routine->exercises()->get();
+        $input['routine'] = $routine;
+        $input['exercises'] = $exercises;
+        $pdf = PDF::loadView('admin.routines.show',$input)->setOptions(['defaultFont' => 'sans-serif']);
+        return $pdf->download($routine->name.'.pdf');
     }
 }

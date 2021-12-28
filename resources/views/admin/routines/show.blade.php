@@ -43,6 +43,12 @@
                     </div>
                 @endforeach
             </div>
+            <div class="col-12 mt-2">
+                <div class="form-group text-center">
+                    <a class="btn btn-danger" href="{{route('admin.routines.index')}}"><i class="fas fa-reply"></i> Regresar</a>
+                    <a href="{{route('admin.routines.download',$routine->id)}}" class="btn btn-success"><i class="fas fa-save"></i> Descargar</a>
+                </div>
+            </div>
         </div>
     </div>
 @stop
