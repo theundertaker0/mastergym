@@ -89,9 +89,10 @@ class TrainingController extends Controller
     public function edit(Training $training)
     {
         //
-        $routines = $training->routines()->get();
+        $routines = Routine::all();
+        $rou = $training->routines()->get();
         $r = array();
-        foreach ($routines as $ro) {
+        foreach ($rou as $ro) {
             array_push($r, $ro->id);
         }
         return view('admin.trainings.edit', with(['training'=> $training, 'routines' => $routines, 'ro' => $r]));

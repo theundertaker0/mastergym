@@ -69,6 +69,7 @@
                                             </header>
 
                                         </div>
+                                </div>
                             @endforeach
                         </div>
                 <div class="col-12">
