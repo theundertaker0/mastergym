@@ -44,7 +44,7 @@ class TrainingController extends Controller
         //
         //
         $request->validate(
-            ['name'=> 'required|max:200'],
+            ['name'=> 'required|max:400'],
             ['name.required'=> 'El nombre del entrenamiento es obligatorio']
         );
 
@@ -110,7 +110,7 @@ class TrainingController extends Controller
         //
         //
         $request->validate(
-            ['name'=> 'required|max:200'],
+            ['name'=> 'required|max:400'],
             ['name.required'=> 'El nombre del plan de entrenamiento es obligatorio']
         );
 

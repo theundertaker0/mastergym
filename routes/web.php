@@ -1,6 +1,9 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\RoutineController;
+use App\Http\Controllers\ExerciseController;
+use App\Http\Controllers\TrainingController;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,13 +21,15 @@ Route::get('/', function () {
 });
 
 Auth::routes();
-
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::prefix('admin')->group(function (){
     Route::name('admin.')->group(function (){
-        Route::resource('exercises', App\Http\Controllers\ExerciseController::class);
-        Route::resource('routines', App\Http\Controllers\RoutineController::class);
-        Route::resource('trainings',\App\Http\Controllers\TrainingController::class);
+        Route::resource('exercises', ExerciseController::class);
+        Route::get('exercises/download/{id}',[ExerciseController::class, 'download'])->name('exercises.download');
+        Route::get('routines/download/{id}',[RoutineController::class,'download'])->name('routines.download');
+        Route::resource('routines', RoutineController::class);
+        Route::resource('trainings',TrainingController::class);
+        Route::get('trainings/download/{id}',[TrainingController::class,'download'])->name('trainings.download');
     });
 });
 

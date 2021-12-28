@@ -38,6 +38,11 @@
                     </div>
                 @endforeach
             </div>
+            <div class="col-12 mt-2">
+                <div class="form-group text-center">
+                    <a class="btn btn-danger" href="{{route('admin.trainings.index')}}">Regresar</a>
+                </div>
+            </div>
         </div>
     </div>
 @stop
