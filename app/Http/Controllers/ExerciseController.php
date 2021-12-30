@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Exercise;
 use App\Models\Muscle;
+use App\Models\Routine;
+use Barryvdh\DomPDF\Facade as PDF;
 use Cohensive\Embed\Embed;
 use Illuminate\Http\Request;
 use Merujan99\LaravelVideoEmbed\Facades\LaravelVideoEmbed;
@@ -141,5 +143,16 @@ class ExerciseController extends Controller
         //
         $exercise->delete();
         return redirect()->route('admin.exercises.index')->with('message', 'Ejercicio Eliminado con éxito');
+    }
+
+    public function download($id)
+    {
+        $input = array();
+        $e = Exercise::find($id);
+        $m = $e->muscle;
+        $input['m'] =$m ;
+        $input['e'] = $e;
+        $pdf = PDF::loadView('admin.exercises.print',$input)->setOptions(['defaultFont' => 'sans-serif']);
+        return $pdf->download($e->name.'.pdf');
     }
 }

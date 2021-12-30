@@ -43,6 +43,7 @@
         <div class="col-12 mt-2">
             <div class="form-group text-center">
                 <a class="btn btn-danger" href="{{route('admin.exercises.index')}}">Regresar</a>
+                <a href="{{route('admin.exercises.download',$exercise->id)}}" class="btn btn-success"><i class="fas fa-save"></i> Descargar</a>
             </div>
         </div>
     </div>
