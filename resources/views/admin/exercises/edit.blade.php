@@ -1,5 +1,5 @@
 @extends('adminlte::page')
-@section('title', 'Nuevo Ejercicio')
+@section('title', 'Editar Ejercicio')
 @section('css')
     <link href="https://cdn.jsdelivr.net/gh/kartik-v/bootstrap-fileinput@5.2.5/css/fileinput.min.css" media="all" rel="stylesheet" type="text/css" />
 @stop

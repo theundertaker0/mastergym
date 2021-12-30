@@ -10050,23 +10050,22 @@
         </div>
     </div>
     <div class="row">
+        <div class="col-6 offset-3">
+            @if($e->img && $e->img != "")
+                <img src="data:image/png;base64,{{ base64_encode(file_get_contents(public_path('/exercises/img/'.$e->img))) }}" alt="" class="img-fluid">
+            @else
+                <img src="data:image/png;base64,{{ base64_encode(file_get_contents(public_path('/img/dummyexercise.jpg'))) }}" alt="" class="img-fluid">
+            @endif
+        </div>
+    </div>
+    <div class="row mt-4">
         <table class="table table-bordered">
             <thead>
             </thead>
             <tbody>
             <tr>
-                <td>
-                    @if($e->img && $e->img != "")
-                        <img src="data:image/png;base64,{{ base64_encode(file_get_contents(public_path('/exercises/img/'.$e->img))) }}" alt="" class="" style="max-width: 300px;">
-                    @else
-                        <img src="data:image/png;base64,{{ base64_encode(file_get_contents(public_path('/img/dummyexercise.jpg'))) }}" alt="" class="card-img-top">
-                    @endif
-                    <p>hola</p>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    Grupo muscular:
+                <td class="text-center table-info">
+                    <h5> Grupo muscular:</h5>
                 </td>
             </tr>
             <tr>
@@ -10075,8 +10074,8 @@
                 </td>
             </tr>
             <tr>
-                <td>
-                    Video:
+                <td class="text-center table-info">
+                    <h5>Video:</h5>
                 </td>
             </tr>
             <tr>
@@ -10085,8 +10084,8 @@
                 </td>
             </tr>
             <tr>
-                <td>
-                    Descripción:
+                <td class="text-center table-info">
+                    <h5>Descripción:</h5>
                 </td>
             </tr>
             <tr>
