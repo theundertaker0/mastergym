@@ -106,7 +106,7 @@
                 elements : {
                     img: function( el ) {
                         // Add bootstrap "img-responsive" class to each inserted image
-                        el.addClass('img-fluid');
+                        el.addClass('img-fluid'); //para rebase
 
                         // Remove inline "height" and "width" styles and
                         // replace them with their attribute counterparts.
