@@ -153,6 +153,7 @@ class ExerciseController extends Controller
         $input['m'] =$m ;
         $input['e'] = $e;
         $pdf = PDF::loadView('admin.exercises.print',$input)->setOptions(['defaultFont' => 'sans-serif']);
-        return $pdf->download($e->name.'.pdf');
+
+        return $pdf->stream();
     }
 }

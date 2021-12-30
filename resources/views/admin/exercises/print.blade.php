@@ -10050,18 +10050,18 @@
         </div>
     </div>
     <div class="row">
-        <table>
+        <table class="table table-bordered">
             <thead>
             </thead>
             <tbody>
             <tr>
                 <td>
                     @if($e->img && $e->img != "")
-                        <img src="{{public_path('/exercises/img/'.$e->img)}}" alt="" class="card-img-top">
+                        <img src="data:image/png;base64,{{ base64_encode(file_get_contents(public_path('/exercises/img/'.$e->img))) }}" alt="" class="" style="max-width: 300px;">
                     @else
-                        <img src="{{ env('APP_URL','http://localhost:8000') }}/img/dummyexercise.jpg" alt="" class="card-img-top">
+                        <img src="data:image/png;base64,{{ base64_encode(file_get_contents(public_path('/img/dummyexercise.jpg'))) }}" alt="" class="card-img-top">
                     @endif
-                    <p>{{ env('APP_URL') }}/img/dummyexercise.jpg</p>
+                    <p>hola</p>
                 </td>
             </tr>
             <tr>
